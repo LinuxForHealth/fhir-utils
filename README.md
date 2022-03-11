@@ -1,23 +1,20 @@
-# python-library-template
-Quick Start Project for Developing Python Libraries
+# FHIR-Utils
+A Handy set of utilities with convienence methods to make working with FHIR easier and saner (such as common display of HumanName, Address, etc resource types where many parent types include lists of these requiring frequent display.
 
 ## Overview
 
-The Python Library Template provides the boiler-plate code for bootstrapping a setuptools based Python 3.x library project.
-Assets provided include:
-- setup.cfg and pyproject.toml with pytest and black dependencies
-- this README with the beginnings of a QuickStart
-- a single unit test in src/tests/test_lib.py
+One of the good/bad things about FHIR resources is they are designed to accomodate a huge array of data formats that healthcare users around the globe use. This means that the flexibility of data formats is also extremely flexible and accomodating that flexibility can be frustrating when doing simple tasks such as displaying a patient's name, since a large number of fields are both optional and can be single elements or lists. This does of course take into account **your** specific use case, but provides a pretty good general use case output.
 
-To update the template replace the {library name} placeholder with the name of the library.
 ## QuickStart
+Including the Resource-Text-Utils class will make parsing Fhir data elements easier when outputting to display. Note each of the methods takes an optional parameter to make the output eithr plain text or HTML formatted.
 
 ### Pre-requisites
 The LinuxForHealth {library name} development environment relies on the following software packages:
 
 - [git](https://git-scm.com) for project version control
 - [Python 3.8 or higher](https://www.python.org/downloads/) for runtime/coding support
-
+- [fhir.resources](https://pypi.org/project/fhir.resources/)
+- 
 ### Project Setup and Validation
 ```shell
 pip install --upgrade pip setuptools
