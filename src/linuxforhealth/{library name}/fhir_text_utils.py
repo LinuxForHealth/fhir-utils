@@ -6,16 +6,16 @@ from fhir.resources.contactpoint import ContactPoint
 from typing import List
 
 
-def humannameasstring(humannames: List[HumanName], useHtml: bool = False) -> str:
+def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str:
     """
     Takes a list of HumanName resources (such as a patient's name) and outputs the names taking into account prefixes, suffixes, etc
     :param humannames:
-    :param useHtml:
+    :param usehtml:
     :return: text (either plain formatted text or containing a block of HTML
     """
     if humannames is None:
         raise RuntimeError("humanNameAsString: humanNames cannot be None for conversion")
-    if useHtml:
+    if usehtml:
         newLine = "<br>\n"
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
     else:
@@ -23,42 +23,43 @@ def humannameasstring(humannames: List[HumanName], useHtml: bool = False) -> str
         indent = "\t"
 
     stringarray: List[str] = []
-    for humanName in humannames:
-        if humanName.use:
-            stringarray.append(f"{humanName.use}: ")
-        if humanName.family:
-            stringarray.append(f"{humanName.family} ")
-        if humanName.suffix:
+    humanname: HumanName
+    for humanname in humannames:
+        if humanname.use:
+            stringarray.append(f"{humanname.use}: ")
+        if humanname.family:
+            stringarray.append(f"{humanname.family} ")
+        if humanname.suffix:
             stringarray.append(", ")
-            stringarray.extend(f"{suffix} " for suffix in humanName.suffix)
+            stringarray.extend(f"{suffix} " for suffix in humanname.suffix)
         stringarray.append(", ")
-        if humanName.prefix:
-            stringarray.extend(f"{prefix} " for prefix in humanName.prefix)
-        if humanName.given:
-            stringarray.extend(f"{given} " for given in humanName.given)
-        if humanName.period:
-            stringarray.extend(("Valid: ", str(humanName.period["start"])))
-        if humanName.period["start"] and humanName.period['end']:
+        if humanname.prefix:
+            stringarray.extend(f"{prefix} " for prefix in humanname.prefix)
+        if humanname.given:
+            stringarray.extend(f"{given} " for given in humanname.given)
+        if humanname.period:
+            stringarray.extend(("Valid: ", str(humanname.period["start"])))
+        if humanname.period["start"] and humanname.period['end']:
             stringarray.append(" - ")
-        if humanName.period["end"]:
-            end = str(humanName.period["end"])
+        if humanname.period["end"]:
+            end = str(humanname.period["end"])
             stringarray.append(end)
         stringarray.append(newLine)
     return "".join(stringarray)
 
 
-def addressasstring(addresslist: List[Address], useHtml: bool = False) -> str:
+def addressasstring(addresslist: List[Address], usehtml: bool = False) -> str:
     """
     Takes the address list from resources like Patient, Practicioner, Organisation, Location, etc. The useHTML
     flag decided whether you get back formatted plain-text or HTML (basic html block, not a full page). If using
     HTML you'd want to wrap this is a div or some other container.
     :param addresslist:
-    :param useHtml:
+    :param usehtml:
     :return: str
     """
     if addresslist is None:
         raise TypeError("addressasstring: addressList cannot be None for conversion")
-    if useHtml:
+    if usehtml:
         newLine = "<br>\n"
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
     else:
@@ -86,7 +87,7 @@ def addressasstring(addresslist: List[Address], useHtml: bool = False) -> str:
     return "".join(stringarray)
 
 
-def telecomasstring(contactlist: List[ContactPoint], useHtml: bool = False) -> str:
+def telecomasstring(contactlist: List[ContactPoint], usehtml: bool = False) -> str:
 
     """
     Takes the ContactPoint line (such as telecom) for resources like in a Location, Organization, Patient, etc as string.
@@ -94,14 +95,14 @@ def telecomasstring(contactlist: List[ContactPoint], useHtml: bool = False) -> s
         flag decided whether you get back formatted plain-text or HTML (basic html block, not a full page). If using
         HTML you'd want to wrap this is a div or some other container.
         :param contactlist:
-        :param useHtml:
+        :param usehtml:
         :return: str
     """
     if contactlist is None:
         raise TypeError("telecomasstring: contactlist cannot be None for conversion")
 
 
-    if useHtml:
+    if usehtml:
         newLine = "<br>\n"
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
     else:
@@ -112,7 +113,7 @@ def telecomasstring(contactlist: List[ContactPoint], useHtml: bool = False) -> s
 
     for contact in contactlist:
         stringarray.append(indent+contact.system+':'+newLine)
-        if useHtml and contact.system == "url":
+        if usehtml and contact.system == "url":
             stringarray.append(
                 f'{indent}url: <a href={contact.value}>{contact.value}</a>{newLine}'
             )
@@ -134,17 +135,16 @@ def resourcetoreference(resource: DomainResource, displaytext:str) -> Reference:
         :param resource:
         :return: ReferenceType
    """
-    global displayText
     if resource is None:
         raise RuntimeError("resourcetoreference: resource cannot be None for conversion")
 
     if displaytext is None:
-        displayText = resource.resource_type
+        displaytext = resource.resource_type
 
     reference:Reference = Reference()
     reference.type = resource.resource_type
     reference.value = f"{resource.resource_type}/{resource.id}"
-    reference.display = displayText
+    reference.display = displaytext
 
     return reference
 
