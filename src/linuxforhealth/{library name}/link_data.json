@@ -1,0 +1,14 @@
+  "link": [
+        {
+            "relation": "self",
+            "url": "https://192.168.1.52:9443/fhir-server/api/v4/Patient?_count=10&_page=20"
+        },
+        {
+            "relation": "next",
+            "url": "https://192.168.1.52:9443/fhir-server/api/v4/Patient?_count=10&_page=21"
+        },
+        {
+            "relation": "previous",
+            "url": "https://192.168.1.52:9443/fhir-server/api/v4/Patient?_count=10&_page=19"
+        }
+    ]
