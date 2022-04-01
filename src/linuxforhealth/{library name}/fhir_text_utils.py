@@ -8,7 +8,8 @@ from typing import List
 
 def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str:
     """
-    Takes a list of HumanName resources (such as a patient's name) and outputs the names taking into account prefixes, suffixes, etc
+    Takes a list of HumanName resources (such as a patient's name) and outputs the names taking into account prefixes,
+    suffixes, etc
     :param humannames:
     :param usehtml:
     :return: text (either plain formatted text or containing a block of HTML
@@ -16,15 +17,15 @@ def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str
     if humannames is None:
         raise RuntimeError("humanNameAsString: humanNames cannot be None for conversion")
     if usehtml:
-        newLine = "<br>\n"
+        new_line = "<br>\n"
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
     else:
-        newLine = "\n"
+        new_line = "\n"
         indent = "\t"
-
     stringarray: List[str] = []
     humanname: HumanName
     for humanname in humannames:
+        stringarray.append(indent)
         if humanname.use:
             stringarray.append(f"{humanname.use}: ")
         if humanname.family:
@@ -44,7 +45,7 @@ def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str
         if humanname.period["end"]:
             end = str(humanname.period["end"])
             stringarray.append(end)
-        stringarray.append(newLine)
+        stringarray.append(new_line)
     return "".join(stringarray)
 
 
@@ -60,27 +61,27 @@ def addressasstring(addresslist: List[Address], usehtml: bool = False) -> str:
     if addresslist is None:
         raise TypeError("addressasstring: addressList cannot be None for conversion")
     if usehtml:
-        newLine = "<br>\n"
+        new_line = "<br>\n"
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
     else:
-        newLine = "\n"
+        new_line = "\n"
         indent = "\t"
 
     stringarray: List[str] = []
 
     for address in addresslist:
-        stringarray.append(f"{address.type} {address.use}:{newLine}")
+        stringarray.append(f"{address.type} {address.use}:{new_line}")
         for line in address.line:
             stringarray.extend(
                 (
-                    indent + line + newLine,
+                    indent + line + new_line,
                     indent
                     + address.city
                     + ", "
                     + address.state
                     + " "
                     + address.postalCode
-                    + newLine,
+                    + new_line,
                 )
             )
 
@@ -88,38 +89,35 @@ def addressasstring(addresslist: List[Address], usehtml: bool = False) -> str:
 
 
 def telecomasstring(contactlist: List[ContactPoint], usehtml: bool = False) -> str:
-
     """
-    Takes the ContactPoint line (such as telecom) for resources like in a Location, Organization, Patient, etc as string.
-    The useHTML
-        flag decided whether you get back formatted plain-text or HTML (basic html block, not a full page). If using
-        HTML you'd want to wrap this is a div or some other container.
+    Takes the ContactPoint line (such as telecom) for resources like in a Location, Organization, Patient, etc
+    as string. The useHTML flag decides whether you get back formatted plain-text or HTML (basic html block, not a
+    full page). If using HTML you'd want to wrap this is a div or some other container.
         :param contactlist:
-        :param usehtml:
+        :param usehtml: whether the output is plain text or html in the string
         :return: str
     """
     if contactlist is None:
         raise TypeError("telecomasstring: contactlist cannot be None for conversion")
 
-
     if usehtml:
-        newLine = "<br>\n"
+        new_line = "<br>\n"
         indent = "&nbsp;&nbsp;&nbsp;&nbsp;"
     else:
-        newLine = "\n"
+        new_line = "\n"
         indent = "\t"
 
     stringarray: List[str] = []
 
     for contact in contactlist:
-        stringarray.append(indent+contact.system+':'+newLine)
+        stringarray.append(indent + contact.system + ':' + new_line)
         if usehtml and contact.system == "url":
             stringarray.append(
-                f'{indent}url: <a href={contact.value}>{contact.value}</a>{newLine}'
+                f'{indent}url: <a href={contact.value}>{contact.value}</a>{new_line}'
             )
 
         else:
-            stringarray.append(indent+contact.system+': '+contact.value+newLine)
+            stringarray.append(indent + contact.system + ': ' + contact.value + new_line)
         if contact.period and contact.period["start"] is not None:
             stringarray.append(" Valid: ")
             if contact.period["start"]:
@@ -129,10 +127,11 @@ def telecomasstring(contactlist: List[ContactPoint], usehtml: bool = False) -> s
     return "".join(stringarray)
 
 
-def resourcetoreference(resource: DomainResource, displaytext:str) -> Reference:
+def resourcetoreference(resource: DomainResource, displaytext: str) -> Reference:
     """ returns a reference type for a given resource by its ID. This does not guarantee that the referenced object
     is in fact persisted on the fhir server instance or that the reference is reachable
         :param resource:
+        :param displaytext: is the human-readable version of the reference (mostly so the reader can skip dereferencing)
         :return: ReferenceType
    """
     if resource is None:
@@ -141,10 +140,9 @@ def resourcetoreference(resource: DomainResource, displaytext:str) -> Reference:
     if displaytext is None:
         displaytext = resource.resource_type
 
-    reference:Reference = Reference()
+    reference: Reference = Reference()
     reference.type = resource.resource_type
     reference.value = f"{resource.resource_type}/{resource.id}"
     reference.display = displaytext
 
     return reference
-
