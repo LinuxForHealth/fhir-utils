@@ -26,7 +26,17 @@ python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip se
 pip install -e .[dev]
 pytest
 ```
+### Usage
+In python applications that deal with [FHIR](http://hl7.org/fhir/) resources, you can import the fhir_text_utils.py class and inside you will find a collection of handy util methods for frequently performed FHIR tasks (such as printing a patient's address)
 
+```shell
+from fhir_text_utils import FhirTextUtils
+
+patient: Patient = myFhirServer.fetch(patientId)
+print('patient: '+FhirTextUtils.humanNameAsString(patient.name))
+
+>>> patient: Washington Jr., Dr. Fred Lawrence
+```
 
 ### Code Formatting
 
