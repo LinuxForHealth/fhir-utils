@@ -15,10 +15,9 @@ assert test_patient is not None
 print(f"Patient Name: [{humannameasstring(test_patient.name).strip()}]")
 assert humannameasstring(test_patient.name).strip() == "Hart  III, Dr. Julia"
 
-print(f"{addressasstring(test_patient.address)}")
-
-address_test = "Address: postal home:\n" + \
-       "\t202 Clinton St.\n" + \
-       "\tWoburn, MA 01807\n"
-assert addressasstring(test_patient.address).strip() == address_test
+print(f"|{addressasstring(test_patient.address)}|")
+adress_file = open('address_text.txt')
+address_test = adress_file.read()
+adress_file.close()
+assert addressasstring(test_patient.address) == address_test
 

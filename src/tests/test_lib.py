@@ -26,8 +26,7 @@ def run_test_name(test_patient):
 
 def run_test_address(test_patient):
     assert test_patient
-    address_test = "Address: postal home:\n" + \
-                   "\t202 Clinton St.\n" + \
-                   "\tWoburn, MA 01807\n"
-
-    assert addressasstring(test_patient.address).strip() == address_test
+    adress_file = open('address_text.txt')
+    address_test = adress_file.read()
+    adress_file.close()
+    assert addressasstring(test_patient.address) == address_test
