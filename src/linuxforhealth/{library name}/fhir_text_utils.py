@@ -31,20 +31,20 @@ def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str
         if humanname.family:
             stringarray.append(f"{humanname.family} ")
         if humanname.suffix:
-            stringarray.append(", ")
+            stringarray.append(" ")
             stringarray.extend(f"{suffix} " for suffix in humanname.suffix)
-        stringarray.append(", ")
+            stringarray.append(", ")
         if humanname.prefix:
             stringarray.extend(f"{prefix} " for prefix in humanname.prefix)
         if humanname.given:
             stringarray.extend(f"{given} " for given in humanname.given)
         if humanname.period:
             stringarray.extend(("Valid: ", str(humanname.period["start"])))
-        if humanname.period["start"] and humanname.period['end']:
-            stringarray.append(" - ")
-        if humanname.period["end"]:
-            end = str(humanname.period["end"])
-            stringarray.append(end)
+            if humanname.period["start"] and humanname.period['end']:
+                stringarray.append(" - ")
+            if humanname.period["end"]:
+                end = str(humanname.period["end"])
+                stringarray.append(end)
         stringarray.append(new_line)
     return "".join(stringarray)
 
@@ -54,8 +54,8 @@ def addressasstring(addresslist: List[Address], usehtml: bool = False) -> str:
     Takes the address list from resources like Patient, Practicioner, Organisation, Location, etc. The useHTML
     flag decided whether you get back formatted plain-text or HTML (basic html block, not a full page). If using
     HTML you'd want to wrap this is a div or some other container.
-    :param addresslist:
-    :param usehtml:
+    :param addresslist: the list of fhir addresses from a resource
+    :param usehtml: should the output be formatted as an HTML string (default plain text)
     :return: str
     """
     if addresslist is None:
