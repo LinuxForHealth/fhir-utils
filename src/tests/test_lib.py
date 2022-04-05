@@ -26,6 +26,8 @@ def run_test_name(test_patient):
 
 def run_test_address(test_patient):
     assert test_patient
-    assert addressasstring(test_patient.address).strip() == "Address: postal home:\n" + \
-           "\t202 Clinton St.\n" + \
-           "\tWoburn, MA 01807\n"
+    address_test = "Address: postal home:\n" + \
+                   "\t202 Clinton St.\n" + \
+                   "\tWoburn, MA 01807\n"
+
+    assert addressasstring(test_patient.address).strip() == address_test
