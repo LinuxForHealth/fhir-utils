@@ -73,7 +73,7 @@ and turning FHIR [Address](http://hl7.org/fhir/datatypes.html#Address) informati
     print('patient: '+FhirTextUtils.humanname_as_string(patient.name))
 
     >>> patient: Washington Jr., Dr. Fred Lawrence
-```
+    ```
 
 ### Unit Tests
 Unit Tests are contained in test_lib.py inside of the tests folder which utilizes pytest to test using a static
@@ -86,16 +86,16 @@ LinuxForHealth {library name} adheres to the [Black Code Style and Convention](h
 
 The following command executes the black formatter with default options
 
-```shell
-user@mbp {library name} % source venv/bin/activate
-(venv) user@mbp {library name} % black ./src
-```
+    ```
+    user@mbp {library name} % source venv/bin/activate
+    (venv) user@mbp {library name} % black ./src
+    ```
 
 Use the `--help` flag to view all available options for the black code formatter
 
-```shell
-(venv) user@mbp {library name} % black --help
-```
+    ```
+    (venv) user@mbp {library name} % black --help
+    ```
 
 ## Building The Project
 LinuxForHealth {library name} is aligned, to a degree, with the PEP-517 standard. `setup.cfg` stores build metadata/configuration.
@@ -103,7 +103,7 @@ LinuxForHealth {library name} is aligned, to a degree, with the PEP-517 standard
 
 The commands below creates a source and wheel distribution within a clean build environment.
 
-```shell
-python3 -m venv build-venv && source build-venv/bin/activate && pip install --upgrade pip setuptools build wheel twine
-python3 -m build --no-isolation
-```
+    ```
+    python3 -m venv build-venv && source build-venv/bin/activate && pip install --upgrade pip setuptools build wheel twine
+    python3 -m build --no-isolation
+    ```
