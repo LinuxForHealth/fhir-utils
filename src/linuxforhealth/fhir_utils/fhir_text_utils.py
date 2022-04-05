@@ -36,7 +36,7 @@ def humanname_as_string(humannames: List[HumanName], usehtml: bool = False) -> s
             stringarray.extend(f"{suffix}" for suffix in humanname.suffix)
             if suffix_space:
                 stringarray.append(" ")
-            if suffix_space is False:
+            if not suffix_space:
                 suffix_space = True
             stringarray.append(", ")
         if humanname.prefix:
