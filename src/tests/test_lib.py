@@ -16,7 +16,7 @@ def load_test_patient():
     patient_file = open('../linuxforhealth/{library name}/patient.json')
     patient_json_dict = json.load(patient_file)
     test_patient: Patient = Patient.parse_obj(patient_json_dict)
-    assert(test_patient)
+    assert(test_patient is not None)
     assert(humannameasstring(test_patient.name) == "Hart  III, Dr. Julia")
 
 

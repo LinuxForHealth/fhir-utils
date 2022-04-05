@@ -30,9 +30,14 @@ def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str
             stringarray.append(f"{humanname.use}: ")
         if humanname.family:
             stringarray.append(f"{humanname.family} ")
+        suffix_space = False
         if humanname.suffix:
             stringarray.append(" ")
-            stringarray.extend(f"{suffix} " for suffix in humanname.suffix)
+            stringarray.extend(f"{suffix}" for suffix in humanname.suffix)
+            if suffix_space:
+                stringarray.append(" ")
+            if suffix_space is False:
+                suffix_space = True
             stringarray.append(", ")
         if humanname.prefix:
             stringarray.extend(f"{prefix} " for prefix in humanname.prefix)
