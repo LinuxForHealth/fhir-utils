@@ -6,7 +6,7 @@ from fhir.resources.contactpoint import ContactPoint
 from typing import List
 
 
-def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str:
+def humanname_as_string(humannames: List[HumanName], usehtml: bool = False) -> str:
     """
     Takes a list of HumanName resources (such as a patient's name) and outputs the names taking into account prefixes,
     suffixes, etc
@@ -54,7 +54,7 @@ def humannameasstring(humannames: List[HumanName], usehtml: bool = False) -> str
     return "".join(stringarray)
 
 
-def addressasstring(addresslist: List[Address], usehtml: bool = False) -> str:
+def address_as_string(addresslist: List[Address], usehtml: bool = False) -> str:
     """
     Takes the address list from resources like Patient, Practicioner, Organisation, Location, etc. The useHTML
     flag decided whether you get back formatted plain-text or HTML (basic html block, not a full page). If using
@@ -93,7 +93,7 @@ def addressasstring(addresslist: List[Address], usehtml: bool = False) -> str:
     return "".join(stringarray)
 
 
-def telecomasstring(contactlist: List[ContactPoint], usehtml: bool = False) -> str:
+def telecom_as_string(contactlist: List[ContactPoint], usehtml: bool = False) -> str:
     """
     Takes the ContactPoint line (such as telecom) for resources like in a Location, Organization, Patient, etc
     as string. The useHTML flag decides whether you get back formatted plain-text or HTML (basic html block, not a
@@ -132,7 +132,7 @@ def telecomasstring(contactlist: List[ContactPoint], usehtml: bool = False) -> s
     return "".join(stringarray)
 
 
-def resourcetoreference(resource: DomainResource, displaytext: str) -> Reference:
+def resource_to_reference(resource: DomainResource, displaytext: str) -> Reference:
     """ returns a reference type for a given resource by its ID. This does not guarantee that the referenced object
     is in fact persisted on the fhir server instance or that the reference is reachable
         :param resource:

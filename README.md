@@ -55,19 +55,23 @@ turning FHIR [HumanName](http://hl7.org/fhir/datatypes.html#HumanName)) lists in
 and turning FHIR [Address](http://hl7.org/fhir/datatypes.html#Address) information into a usual looking address: 
  
     ```
-    practicioner_address: str = addressasstring(practicioner.address, False)
+
+    from fhir_text_utils import FhirTextUtils
+    from fhir.resources.patient import Patient
+    from fhir.resources.practicioner import Practicioner
+
+    patient: Patient = myFhirServer.fetch(patient_id)
+    practicioner: Practicioner = myFhirServer.fetch(practicioner_id)
+    practicioner_address: str = address_as_string(practicioner.address, False)
     #like the HumanName it can be either HTML or plain-text based on the second parameter
-    ```
+    >>>postal home:
+	202 Clinton St. 
+	Woburn, MA 01807
+    
+    # pseudocode for the fhir server here. To see this happen via a local file look at the test_lib.py unit test
+    print('patient: '+FhirTextUtils.humanname_as_string(patient.name))
 
-```
-from fhir_text_utils import FhirTextUtils
-from fhir.resources.patient import Patient
-
-# pseudocode for the fhir server here. To see this happen via a local file look at the test_lib.py unit test
-patient: Patient = myFhirServer.fetch(patientId)
-print('patient: '+FhirTextUtils.humanNameAsString(patient.name))
-
->>> patient: Washington Jr., Dr. Fred Lawrence
+    >>> patient: Washington Jr., Dr. Fred Lawrence
 ```
 
 ### Unit Tests
