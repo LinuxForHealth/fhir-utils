@@ -47,10 +47,10 @@ The 2 most commonly used methods will be:
 turning FHIR [HumanName](http://hl7.org/fhir/datatypes.html#HumanName)) lists into strings:
 
     ```
-    patient_name: str = humannameasstring(test_patient.name, False)
+    patient_name: str = humanname_as_string(test_patient.name, False)
     # it can also return a HTML formatted version with the second parameter to true (by default it is plain-text)
     # note: you will typically wrap that in a <div></div> or some other structure
-    patient_name_html: str = humannameasstring(test_patient.name, True)
+    patient_name_html: str = humanname_as_string(test_patient.name, True)
     ```
 and turning FHIR [Address](http://hl7.org/fhir/datatypes.html#Address) information into a usual looking address: 
  
