@@ -64,6 +64,7 @@ and turning FHIR [Address](http://hl7.org/fhir/datatypes.html#Address) informati
     practicioner: Practicioner = myFhirServer.fetch(practicioner_id)
     practicioner_address: str = address_as_string(practicioner.address, False)
     #like the HumanName it can be either HTML or plain-text based on the second parameter
+    print(practicioner_address)
     >>>postal home:
 	202 Clinton St. 
 	Woburn, MA 01807
