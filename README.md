@@ -1,12 +1,25 @@
 # FHIR-Utils
-A Handy set of utilities with convienence methods to make working with FHIR easier and saner (such as common display of HumanName, Address, etc resource types where many parent types include lists of these requiring frequent display.
+A Handy set of utilities with convenience methods to make working with FHIR easier and saner (such as common display of
+[HumanName](http://hl7.org/fhir/datatypes.html#HumanName), [Address](http://hl7.org/fhir/datatypes.html#Address), etc 
+resource types where many parent types include lists of these requiring frequent display.
 
 ## Overview
 
-One of the good/bad things about FHIR resources is they are designed to accomodate a huge array of data formats that healthcare users around the globe use. This means that the flexibility of data formats is also extremely flexible and accomodating that flexibility can be frustrating when doing simple tasks such as displaying a patient's name, since a large number of fields are both optional and can be single elements or lists. This does of course take into account **your** specific use case, but provides a pretty good general use case output.
+One of the good/bad things about [FHIR resources](http://hl7.org/fhir/resourcelist.html) is they are designed to 
+accommodate a huge array of data formats that healthcare users around the globe use. This means that the flexibility 
+of data formats is also extremely flexible and accomodating that flexibility can be frustrating when doing simple 
+tasks such as displaying a patient's name, since a large number of fields are both optional and can be single elements 
+or lists. This does of course take into account **your** specific use case, but provides a pretty good general use 
+case output.
+
+## Target User
+This is a python library so is oriented towards a python developer working with FHIR in a healthcare context where
+you need to display FHIR data in a human readable format (rather than the typical demo of dumping the JSON, even if
+pretty-printed to the screen).
 
 ## QuickStart
-Including the Resource-Text-Utils class will make parsing Fhir data elements easier when outputting to display. Note each of the methods takes an optional parameter to make the output eithr plain text or HTML formatted.
+Including the fhir_text_utils class will make parsing Fhir data elements easier when outputting for display. 
+**Note** each of the methods takes an *optional* parameter to make the output either plain text or HTML formatted.
 
 ### Pre-requisites
 The LinuxForHealth {library name} development environment relies on the following software packages:
@@ -27,11 +40,30 @@ pip install -e .[dev]
 pytest
 ```
 ### Usage
-In python applications that deal with [FHIR](http://hl7.org/fhir/) resources, you can import the fhir_text_utils.py class and inside you will find a collection of handy util methods for frequently performed FHIR tasks (such as printing a patient's address)
+In python applications that deal with [FHIR](http://hl7.org/fhir/) resources, you can import the fhir_text_utils.py module and inside you will find a collection of useful utility methods for frequently performed FHIR tasks (such as printing a patient's address or HumanName)
 
-```shell
+The 2 most commonly used methods will be: 
+
+turning FHIR [HumanName](http://hl7.org/fhir/datatypes.html#HumanName)) lists into strings:
+
+    ```
+    patient_name: str = humannameasstring(test_patient.name, False)
+    # it can also return a HTML formatted version with the second parameter to true (by default it is plain-text)
+    # note: you will typically wrap that in a <div></div> or some other structure
+    patient_name_html: str = humannameasstring(test_patient.name, True)
+    ```
+and turning FHIR [Address](http://hl7.org/fhir/datatypes.html#Address) information into a usual looking address: 
+ 
+    ```
+    practicioner_address: str = addressasstring(practicioner.address, False)
+    #like the HumanName it can be either HTML or plain-text based on the second parameter
+    ```
+
+```
 from fhir_text_utils import FhirTextUtils
+from fhir.resources.patient import Patient
 
+# pseudocode for the fhir server here. To see this happen via a local file look at the test_lib.py unit test
 patient: Patient = myFhirServer.fetch(patientId)
 print('patient: '+FhirTextUtils.humanNameAsString(patient.name))
 
