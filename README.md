@@ -70,6 +70,11 @@ print('patient: '+FhirTextUtils.humanNameAsString(patient.name))
 >>> patient: Washington Jr., Dr. Fred Lawrence
 ```
 
+### Unit Tests
+Unit Tests are contained in test_lib.py inside of the tests folder which utilizes pytest to test using a static
+Patient FHIR Resource contained in patient.json. Since the address is a longer multi-line string we use a test file
+to compare to via the assertion
+
 ### Code Formatting
 
 LinuxForHealth {library name} adheres to the [Black Code Style and Convention](https://black.readthedocs.io/en/stable/index.html)
