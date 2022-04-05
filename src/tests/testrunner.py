@@ -16,8 +16,7 @@ print(f"Patient Name: [{humannameasstring(test_patient.name).strip()}]")
 assert humannameasstring(test_patient.name).strip() == "Hart  III, Dr. Julia"
 
 print(f"|{addressasstring(test_patient.address)}|")
-adress_file = open('address_text.txt')
-address_test = adress_file.read()
-adress_file.close()
+with open('address_text.txt') as adress_file:
+    address_test = adress_file.read()
 assert addressasstring(test_patient.address) == address_test
 

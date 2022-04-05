@@ -26,7 +26,6 @@ def run_test_name(test_patient):
 
 def run_test_address(test_patient):
     assert test_patient
-    adress_file = open('address_text.txt')
-    address_test = adress_file.read()
-    adress_file.close()
+    with open('address_text.txt') as adress_file:
+        address_test = adress_file.read()
     assert addressasstring(test_patient.address) == address_test
