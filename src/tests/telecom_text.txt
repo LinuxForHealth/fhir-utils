@@ -1,0 +1,8 @@
+	phone:
+	 work phone : (505) 555 1212 
+	phone:
+	 mobile phone : (418) 555 5613 
+	url:
+	 home url : http://wwww.juliahart.com/about/ 
+	phone:
+	 old phone : (702) 555 8834 

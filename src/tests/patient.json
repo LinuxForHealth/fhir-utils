@@ -59,6 +59,34 @@
                         ]
                     }
                 ],
+                 "telecom": [
+                    {
+                    "system": "phone",
+                    "value": "(505) 555 1212",
+                    "use": "work",
+                    "rank": 1
+                  },
+                  {
+                    "system": "phone",
+                    "value": "(418) 555 5613",
+                    "use": "mobile",
+                    "rank": 2
+                  },
+                   {
+                    "system": "url",
+                    "value": "http://wwww.juliahart.com/about/",
+                    "use": "home",
+                    "rank": 2
+                  },
+                  {
+                    "system": "phone",
+                    "value": "(702) 555 8834",
+                    "use": "old",
+                    "period": {
+                      "end": "2014"
+                    }
+                  }
+                ],
                 "gender": "female",
                 "birthDate": "1927-10-24",
                 "address": [

@@ -3,17 +3,22 @@ from fhir.resources.address import Address
 from fhir.resources.reference import Reference
 from fhir.resources.domainresource import DomainResource
 from fhir.resources.contactpoint import ContactPoint
+from fhir.resources.period import Period
+from fhir.resources.identifier import Identifier
 from typing import List
 
 
-def humanname_as_string(humannames: List[HumanName], usehtml: bool = False) -> str:
+def humanname_as_string(humannames: List[HumanName], usehtml: bool = False, last_first_order: bool = True) -> str:
     """
     Takes a list of HumanName resources (such as a patient's name) and outputs the names taking into account prefixes,
     suffixes, etc
     :param humannames:
     :param usehtml:
+    :paran last_first_order: if True (default) name will be Family suffix,Prefix Given... if False will be in natural
+        order as in Prefix Given Family Suffix.
     :return: text (either plain formatted text or containing a block of HTML
     """
+
     if humannames is None:
         raise RuntimeError("humanNameAsString: humanNames cannot be None for conversion")
     if usehtml:
@@ -23,33 +28,43 @@ def humanname_as_string(humannames: List[HumanName], usehtml: bool = False) -> s
         new_line = "\n"
         indent = "\t"
     stringarray: List[str] = []
+    last_string_array: List[str] = []
+    first_string_array: List[str] = []
     humanname: HumanName
     for humanname in humannames:
         stringarray.append(indent)
         if humanname.use:
             stringarray.append(f"{humanname.use}: ")
         if humanname.family:
-            stringarray.append(f"{humanname.family} ")
+            last_string_array.append(f"{humanname.family} ")
         suffix_space = False
         if humanname.suffix:
-            stringarray.append(" ")
-            stringarray.extend(f"{suffix}" for suffix in humanname.suffix)
+            last_string_array.append(" ")
+            last_string_array.extend(f"{suffix}" for suffix in humanname.suffix)
             if suffix_space:
-                stringarray.append(" ")
+                last_string_array.append(" ")
             if not suffix_space:
                 suffix_space = True
-            stringarray.append(", ")
         if humanname.prefix:
-            stringarray.extend(f"{prefix} " for prefix in humanname.prefix)
+            first_string_array.extend(f"{prefix} " for prefix in humanname.prefix)
         if humanname.given:
-            stringarray.extend(f"{given} " for given in humanname.given)
+            first_string_array.extend(f"{given} " for given in humanname.given)
         if humanname.period:
-            stringarray.extend(("Valid: ", str(humanname.period["start"])))
+            last_string_array.extend(("Valid: ", str(humanname.period["start"])))
             if humanname.period["start"] and humanname.period['end']:
-                stringarray.append(" - ")
+                last_string_array.append(" - ")
             if humanname.period["end"]:
                 end = str(humanname.period["end"])
-                stringarray.append(end)
+                last_string_array.append(end)
+        if last_first_order:
+            stringarray.append("".join(last_string_array))
+            stringarray.append(", ")
+            stringarray.append("".join(first_string_array))
+        else:
+            stringarray.append("".join(first_string_array))
+            stringarray.append(" ")
+            stringarray.append("".join(last_string_array))
+
         stringarray.append(new_line)
     return "".join(stringarray)
 
@@ -122,13 +137,16 @@ def telecom_as_string(contactlist: List[ContactPoint], usehtml: bool = False) ->
             )
 
         else:
-            stringarray.append(indent + contact.system + ': ' + contact.value + new_line)
-        if contact.period and contact.period["start"] is not None:
-            stringarray.append(" Valid: ")
-            if contact.period["start"]:
-                stringarray.append(contact.period["start"])
-            if contact.period["end"]:
-                stringarray.append(contact.period["end"])
+            stringarray.append(f"{indent} {contact.use} {contact.system} : {contact.value} {new_line}")
+        # this is separate from the other period none checks as it saves more and statement
+        if contact.period:
+            print(f"Period: {contact.period}")
+            if contact.period.start is not None:
+                stringarray.append(" Valid: ")
+                if contact.period.start:
+                    stringarray.append(contact.period.start)
+                if contact.period.end:
+                    stringarray.append(contact.period.end)
     return "".join(stringarray)
 
 
@@ -146,8 +164,7 @@ def resource_to_reference(resource: DomainResource, displaytext: str) -> Referen
         displaytext = resource.resource_type
 
     reference: Reference = Reference()
-    reference.type = resource.resource_type
-    reference.value = f"{resource.resource_type}/{resource.id}"
-    reference.display = displaytext
+    reference.reference = f"{resource.resource_type}/{resource.id}"
+    reference.display = f"{resource.resource_type}: {displaytext}/{resource.id}"
 
     return reference
