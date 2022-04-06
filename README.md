@@ -79,6 +79,7 @@ and turning FHIR [Address](http://hl7.org/fhir/datatypes.html#Address) informati
 this will turn a HumanName list from a resource (e.g. Patient.name) into a readable name. It supports HTML
 formatting (off by default) and last-first or natural order naming (last-first default)
 Example:
+
     ```
         Patient Name (last-first): Hart  III, Dr. Julia (last-first)
         Patient Name (natural order): Dr. Julia  Hart  III (natural)
@@ -88,6 +89,7 @@ Example:
 this will return an Address List from a resource (e.g. Patient.address) into a readble address string. It supports
 HTML formatting (off by default)
 Example:
+
     ```
         postal home:
             202 Clinton St.
@@ -98,6 +100,7 @@ Example:
 this will return a Telecom List from a resource (e.g. Practitioner.address) into a human readable list of
 contact information.
     Example:
+
     ```
         phone:
          work phone : (505) 555 1212 
@@ -114,6 +117,7 @@ contact information.
  FHIR references you can think of FHIR references as equivalent to Foreign Keys in a relational Database, except
  unlike relational databases these are generic so the type is included in the value: Type/id
     Example:
+
     ```
         Patient/a9831a75-3ff9-458c-9dbb-081ea3d71684
     ```
