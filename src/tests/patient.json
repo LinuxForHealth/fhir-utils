@@ -1,0 +1,105 @@
+ {
+                "resourceType": "Patient",
+                "id": "a9831a75-3ff9-458c-9dbb-081ea3d71684",
+                "meta": {
+                    "versionId": "2",
+                    "lastUpdated": "2022-03-11T18:01:12.072901Z"
+                },
+                "text": {
+                    "status": "generated",
+                    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">Patient:  Julia Hart (F) MRN:000305  24/10/1927(58y) Address: 202 Clinton St. , Woburn, MA</div>"
+                },
+                "extension": [
+                    {
+                        "extension": [
+                            {
+                                "url": "latitude",
+                                "valueDecimal": 42.44639600000
+                            },
+                            {
+                                "url": "longitude",
+                                "valueDecimal": -71.45940500000
+                            }
+                        ],
+                        "url": "http://hl7.org/fhir/StructureDefinition/geolocation"
+                    },
+                    {
+                        "url": "https://alvearie.io/alvearie-fhir-ig/StructureDefinition-snapshot-age-in-years.html",
+                        "valueDecimal": 58
+                    }
+                ],
+                "identifier": [
+                    {
+                        "id": "32771",
+                        "use": "official",
+                        "type": {
+                            "coding": [
+                                {
+                                    "system": "http://terminology.hl7.org/3.1.0/CodeSystem-v2-0203.html",
+                                    "code": "MRN"
+                                }
+                            ],
+                            "text": "MIMIC subject ID"
+                        },
+                        "system": "http://https://mimic.physionet.org/identifiers/subjectid",
+                        "value": "32771"
+                    }
+                ],
+                "name": [
+                    {
+                        "family": "Hart",
+                        "given": [
+                            "Julia"
+                        ],
+                        "prefix": [
+                          "Dr."
+                        ],
+                        "suffix":  [
+                          "III"
+                        ]
+                    }
+                ],
+                 "telecom": [
+                    {
+                    "system": "phone",
+                    "value": "(505) 555 1212",
+                    "use": "work",
+                    "rank": 1
+                  },
+                  {
+                    "system": "phone",
+                    "value": "(418) 555 5613",
+                    "use": "mobile",
+                    "rank": 2
+                  },
+                   {
+                    "system": "url",
+                    "value": "http://wwww.juliahart.com/about/",
+                    "use": "home",
+                    "rank": 2
+                  },
+                  {
+                    "system": "phone",
+                    "value": "(702) 555 8834",
+                    "use": "old",
+                    "period": {
+                      "end": "2014"
+                    }
+                  }
+                ],
+                "gender": "female",
+                "birthDate": "1927-10-24",
+                "address": [
+                    {
+                        "use": "home",
+                        "type": "postal",
+                        "line": [
+                            "202 Clinton St. "
+                        ],
+                        "city": "Woburn",
+                        "state": "MA",
+                        "postalCode": "01807",
+                        "country": "USA"
+                    }
+                ]
+        }
