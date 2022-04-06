@@ -1,3 +1,47 @@
+"""
+Module: fhir_text_utils is a collection of tools to use FHIR resources in text use-cases, such as displaying a patient
+resource on a screen or prinout. As anyone who has worked with FHIR knows, there is a lot of repetitive coding to parse
+items such as displaying a Name or Address. This is more complicated than your typical database record for a person
+as it is somewhat self definable inside the data where the data provider can specify how to interpret the record. This
+is both FHIR's power and weakness in that it is infinitely flexible and unfortunately infinitely flexible.
+
+Functions:
+    humanname_as_string(humannames: List[HumanName], usehtml: bool = False, last_first_order: bool = True)
+    this will turn a HumanName list from a resource (e.g. Patient.name) into a readable name. It supports HTML
+    formatting (off by default) and last-first or natural order naming (last-first default)
+    Example:
+        Patient Name (last-first): Hart  III, Dr. Julia (last-first)
+        Patient Name (natural order): Dr. Julia  Hart  III (natural)
+
+    address_as_string(addresslist: List[Address], usehtml: bool = False)
+    this will return an Address List from a resource (e.g. Patient.address) into a readble address string. It supports
+    HTML formatting (off by default)
+    Example:
+        postal home:
+            202 Clinton St.
+            Woburn, MA 01807
+
+    telecom_as_string(contactlist: List[ContactPoint], usehtml: bool = False)
+    this will return a Telecom List from a resource (e.g. Practitioner.address) into a human readable list of
+    contact information.
+    Example:
+        phone:
+         work phone : (505) 555 1212
+        phone:
+         mobile phone : (418) 555 5613
+        url:
+         home url : http://wwww.juliahart.com/about/
+        phone:
+         old phone : (702) 555 8834
+
+     resource_to_reference(resource: DomainResource, displaytext: str)
+     this is a simple routine that takes any FHIR resource and returns a Reference to it. For those unfamiliar with
+     FHIR references you can think of FHIR references as equivalent to Foreign Keys in a relational Database, except
+     unlike relational databases these are generic so the type is included in the value: Type/id
+     Example:
+         Patient/a9831a75-3ff9-458c-9dbb-081ea3d71684
+"""
+
 from fhir.resources.humanname import HumanName
 from fhir.resources.address import Address
 from fhir.resources.reference import Reference
@@ -7,7 +51,6 @@ from fhir.resources.period import Period
 from fhir.resources.identifier import Identifier
 from typing import List
 
-
 def humanname_as_string(humannames: List[HumanName], usehtml: bool = False, last_first_order: bool = True) -> str:
     """
     Takes a list of HumanName resources (such as a patient's name) and outputs the names taking into account prefixes,
@@ -15,7 +58,7 @@ def humanname_as_string(humannames: List[HumanName], usehtml: bool = False, last
     :param humannames:
     :param usehtml:
     :paran last_first_order: if True (default) name will be Family suffix,Prefix Given... if False will be in natural
-        order as in Prefix Given Family Suffix.
+        order as in Prefix Given Family Suffix. e.g. Dr. Sara Smith Jr. (natural order) vs. Smith Jr., Dr. Sara
     :return: text (either plain formatted text or containing a block of HTML
     """
 
@@ -57,13 +100,10 @@ def humanname_as_string(humannames: List[HumanName], usehtml: bool = False, last
                 end = str(humanname.period["end"])
                 last_string_array.append(end)
         if last_first_order:
-            stringarray.append("".join(last_string_array))
-            stringarray.append(", ")
-            stringarray.append("".join(first_string_array))
+            stringarray.extend(("".join(last_string_array), ", ", "".join(first_string_array)))
+
         else:
-            stringarray.append("".join(first_string_array))
-            stringarray.append(" ")
-            stringarray.append("".join(last_string_array))
+            stringarray.extend(("".join(first_string_array), " ", "".join(last_string_array)))
 
         stringarray.append(new_line)
     return "".join(stringarray)
