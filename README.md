@@ -124,7 +124,7 @@ contact information.
 
 ### Unit Tests
 Unit Tests are contained in test_lib.py inside of the tests folder which utilizes pytest to test using a static
-Patient FHIR Resource contained in [patient.json](tests/patient.json). Since the address is a longer multi-line string we use a test file
+Patient FHIR Resource contained in [patient.json](https://github.com/LinuxForHealth/fhir-utils/blob/main/src/tests/patient.json). Since the address is a longer multi-line string we use a test file
 to compare to via the assertion
 
 ### Code Formatting

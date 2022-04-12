@@ -29,10 +29,10 @@ class PageLink:
         self.page = int(arguments['_page'][0])
         self.count = int(arguments['_count'][0])
 
-        def __str__(self):
-            """
-            Standard str method for this class produces human-readable text for the values in the link
-            :param self:
-            :return:
-            """
-            return f"type: {self.title} on page: {self.page} with count: {self.count}"
+    def __str__(self):
+        """
+        Standard str method for this class produces human-readable text for the values in the link
+        :param self:
+        :return:
+        """
+        return f"type: {self.title} on page: {self.page} with count: {self.count}"

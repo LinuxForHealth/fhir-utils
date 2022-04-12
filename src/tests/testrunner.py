@@ -2,10 +2,10 @@ import json
 from fhir.resources.humanname import HumanName
 from fhir.resources.patient import Patient
 from typing import List
-from src.linuxforhealth.fhir_utils.fhir_text_utils import humanname_as_string
-from src.linuxforhealth.fhir_utils.fhir_text_utils import address_as_string
-from src.linuxforhealth.fhir_utils.fhir_text_utils import telecom_as_string
-from src.linuxforhealth.fhir_utils.fhir_text_utils import resource_to_reference
+from linuxforhealth.fhir_utils.fhir_text_utils import humanname_as_string
+from linuxforhealth.fhir_utils.fhir_text_utils import address_as_string
+from linuxforhealth.fhir_utils.fhir_text_utils import telecom_as_string
+from linuxforhealth.fhir_utils.fhir_text_utils import resource_to_reference
 
 
 patient_file = open('patient.json')
